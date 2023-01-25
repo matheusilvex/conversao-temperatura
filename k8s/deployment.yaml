@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: convert-temperatura
+spec:
+  selector:
+    matchLabels:
+      app: convert-temperatura
+  template:
+    metadata:
+      labels:
+        app: convert-temperatura
+    spec:
+      containers:
+      - name: convert-temperatura
+        image: matheusilvex/conversor-temperatura:1.0
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: convert-temperatura
+spec:
+  selector:
+    app: convert-temperatura
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30000
+  type: NodePort
